@@ -13,6 +13,10 @@ export const AppReducer = (state, action) => {
         ...state,
         transactions: [...state.transactions, action.payload],
       };
+    case 'GET_ALL_TRANSACTIONS':
+      return {
+        transactions: action.payload,
+      };
     default:
       return state;
   }

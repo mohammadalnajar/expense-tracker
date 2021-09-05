@@ -7,13 +7,13 @@ export const IncomeExpenses = () => {
     transactions
       .filter((trans) => trans.amount < 0)
       .map((trans) => trans.amount)
-      .reduce((acc, curr) => acc + curr)
+      .reduce((acc, curr) => acc + curr, 0)
   );
   const income = Math.abs(
     transactions
       .filter((trans) => trans.amount > 0)
       .map((trans) => trans.amount)
-      .reduce((acc, curr) => acc + curr)
+      .reduce((acc, curr) => acc + curr, 0)
   );
   return (
     <div className='inc-exp-container'>
