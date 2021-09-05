@@ -13,6 +13,11 @@ connectDB();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
+
 app.use('/api/v1/transactions', transactionsRouter);
 
 app.listen(PORT, () =>
