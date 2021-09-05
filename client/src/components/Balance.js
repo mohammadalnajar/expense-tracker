@@ -5,7 +5,7 @@ export const Balance = () => {
   const { transactions } = useContext(GlobalContext);
   const total = transactions
     .map((trans) => trans.amount)
-    .reduce((acc, curr) => acc + curr);
+    .reduce((acc, curr) => acc + curr, 0);
   return (
     <>
       <h4>Your Balance</h4>

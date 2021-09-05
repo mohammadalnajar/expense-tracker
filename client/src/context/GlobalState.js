@@ -1,12 +1,7 @@
 import React, { createContext, useReducer } from 'react';
 import { AppReducer } from './AppReducer';
 const initialState = {
-  transactions: [
-    { id: 1, text: 'Flower', amount: -20 },
-    { id: 2, text: 'Salary', amount: 300 },
-    { id: 3, text: 'Book', amount: -10 },
-    { id: 4, text: 'Camera', amount: 150 },
-  ],
+  transactions: [],
 };
 
 // Create context
@@ -17,7 +12,18 @@ export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
   // Actions:
+  // get all transactions
+  async function getAllTransactions() {
+    try {
+      const res = await fetch('/api/v1/transactions');
+      const response = await res.json();
 
+      dispatch({
+        type: 'GET_ALL_TRANSACTIONS',
+        payload: response.data,
+      });
+    } catch (err) {}
+  }
   // del action
 
   function deleteTransaction(id) {
@@ -38,6 +44,7 @@ export const GlobalProvider = ({ children }) => {
         transactions: state.transactions,
         deleteTransaction,
         addTransaction,
+        getAllTransactions,
       }}
     >
       {children}
