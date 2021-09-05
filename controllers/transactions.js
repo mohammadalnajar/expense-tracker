@@ -56,11 +56,22 @@ exports.deleteTransactions = async (req, res, next) => {
   try {
     const found = await Transaction.findByIdAndDelete(id);
     if (found !== null) {
-      res.json(await Transaction.find());
+      const transactions = await Transaction.find();
+      return res.status(200).json({
+        success: true,
+        data: transactions,
+      });
     } else {
-      res.json('not found');
+      return res.status(404).json({
+        success: false,
+        error: 'Not found',
+      });
     }
   } catch (err) {
     console.log(err);
+    return res.status(500).json({
+      susses: false,
+      error: 'Server Error',
+    });
   }
 };
