@@ -26,17 +26,37 @@ export const GlobalProvider = ({ children }) => {
   }
   // del action
 
-  function deleteTransaction(id) {
-    dispatch({
-      type: 'DELETE_TRANSACTION',
-      payload: id,
-    });
+  async function deleteTransaction(id) {
+    try {
+      const res = await fetch(`/api/v1/transactions/${id}`, {
+        method: 'DELETE',
+      });
+      const response = await res.json();
+      dispatch({
+        type: 'DELETE_TRANSACTION',
+        payload: response.data,
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }
-  function addTransaction(transaction) {
-    dispatch({
-      type: 'ADD_TRANSACTION',
-      payload: transaction,
-    });
+  async function addTransaction(text, amount) {
+    try {
+      const res = await fetch('/api/v1/transactions', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({ text, amount }),
+      });
+      const response = await res.json();
+      dispatch({
+        type: 'ADD_TRANSACTION',
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
   return (
     <GlobalContext.Provider
