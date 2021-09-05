@@ -1,6 +1,6 @@
 //  get transaction
 
-const Transaction = require('../models/transaction');
+const Transaction = require('../models/Transaction');
 
 // get /api/v1/transaction
 exports.getTransactions = async (req, res, next) => {

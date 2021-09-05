@@ -3,11 +3,16 @@ const mongoose = require('mongoose');
 const TransactionSchema = new mongoose.Schema({
   text: {
     type: String,
-    required: true,
+    required: [true, 'Please add some text'],
+    trim: true,
   },
   amount: {
     type: Number,
-    required: true,
+    required: [true, 'Please add a negative or positive number'],
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
   },
 });
 
