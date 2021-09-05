@@ -4,8 +4,12 @@ const Transaction = require('../models/transaction');
 
 // get /api/v1/transaction
 exports.getTransactions = async (req, res, next) => {
-  const result = await Transaction.find();
-  res.json(result);
+  try {
+    const result = await Transaction.find();
+    res.json(result);
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 //  add transaction
@@ -29,6 +33,14 @@ exports.addTransactions = async (req, res, next) => {
 // del /api/v1/transaction/:id
 exports.deleteTransactions = async (req, res, next) => {
   const { id } = req.params;
-  await Transaction.findByIdAndDelete(id);
-  res.json(await Transaction.find());
+  try {
+    const found = await Transaction.findByIdAndDelete(id);
+    if (found !== null) {
+      res.json(await Transaction.find());
+    } else {
+      res.json('not found');
+    }
+  } catch (err) {
+    console.log(err);
+  }
 };
