@@ -64,7 +64,7 @@ exports.deleteTransactions = async (req, res, next) => {
     } else {
       return res.status(404).json({
         success: false,
-        error: 'Not found',
+        error: 'Not found in database',
       });
     }
   } catch (err) {

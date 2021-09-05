@@ -26,11 +26,19 @@ export const GlobalProvider = ({ children }) => {
   }
   // del action
 
-  function deleteTransaction(id) {
-    dispatch({
-      type: 'DELETE_TRANSACTION',
-      payload: id,
-    });
+  async function deleteTransaction(id) {
+    try {
+      const res = await fetch(`/api/v1/transactions/${id}`, {
+        method: 'DELETE',
+      });
+      const response = await res.json();
+      dispatch({
+        type: 'DELETE_TRANSACTION',
+        payload: response.data,
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }
   function addTransaction(transaction) {
     dispatch({
