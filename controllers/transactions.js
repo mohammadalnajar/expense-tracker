@@ -3,14 +3,14 @@
 const Transaction = require('../models/transaction');
 
 // get /api/v1/transaction
-exports.getTransactions = (req, res, next) => {
-  res.send('Get transactions');
+exports.getTransactions = async (req, res, next) => {
+  const result = await Transaction.find();
+  res.json(result);
 };
 
 //  add transaction
 // POST /api/v1/transaction
 exports.addTransactions = async (req, res, next) => {
-  console.log(req.body);
   const { text, amount } = req.body;
   //   res.send('add transactions');
   let transaction = new Transaction({
@@ -19,8 +19,7 @@ exports.addTransactions = async (req, res, next) => {
   });
   try {
     transaction = await transaction.save();
-    console.log(transaction);
-    res.send('done');
+    res.json(transaction);
   } catch (err) {
     console.log(err);
   }
@@ -28,6 +27,8 @@ exports.addTransactions = async (req, res, next) => {
 
 //  delete transaction
 // del /api/v1/transaction/:id
-exports.deleteTransactions = (req, res, next) => {
-  res.send('delete transactions');
+exports.deleteTransactions = async (req, res, next) => {
+  const { id } = req.params;
+  await Transaction.findByIdAndDelete(id);
+  res.json(await Transaction.find());
 };
