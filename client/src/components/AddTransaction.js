@@ -11,8 +11,9 @@ export const AddTransaction = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          console.log('reached');
-          addTransaction({ id: Math.floor(Math.random() * 100), text, amount });
+          addTransaction(text, amount);
+          setText('');
+          setAmount(0);
         }}
       >
         <div className='form-control'>
